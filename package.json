@@ -3,7 +3,7 @@
   "displayName": "Bibtex Tidy",
   "description": "A formatting tool for BibTeX files, integrated with VS Code.",
   "publisher": "Xrimson",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.100.0"
   },
