@@ -1,0 +1,298 @@
+{
+  "name": "bibtex-tidy",
+  "displayName": "Bibtex Tidy",
+  "description": "A formatting tool for BibTeX files, integrated with VS Code.",
+  "publisher": "Xrimson",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "categories": [
+    "Formatters"
+  ],
+  "activationEvents": [
+    "onLanguage:bibtex"
+  ],
+  "main": "./dist/extension.js",
+  "capabilities": {
+    "documentFormattingProvider": "true"
+  },
+  "icon": "static/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ThXrimson/bibtex-tidy-vscode"
+  },
+  "bugs": {
+    "url": "https://github.com/ThXrimson/bibtex-tidy-vscode/issues"
+  },
+  "keywords": [
+    "bibtex",
+    "format",
+    "formatter",
+    "beautify",
+    "tex",
+    "latex",
+    "tidy"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "bibtex",
+        "extensions": [
+          ".bib"
+        ],
+        "aliases": [
+          "BibTeX",
+          "bibtex"
+        ],
+        "filenamePatterns": [
+          "*.bib"
+        ]
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Bibtex Tidy Configuration",
+      "properties": {
+        "bibtex-tidy.options": {
+          "type": "object",
+          "description": "Configuration options for Bibtex Tidy",
+          "properties": {
+            "align": {
+              "description": "Align values\n\nInsert whitespace between fields and values so that values are visually aligned.",
+              "type": [
+                "number",
+                "boolean"
+              ]
+            },
+            "blankLines": {
+              "description": "Insert blank lines\n\nInsert an empty line between each entry.",
+              "type": "boolean"
+            },
+            "curly": {
+              "description": "Enclose values in braces\n\nEnclose all property values in braces. Quoted values will be converted to braces. For example, \"Journal of Tea\" will become {Journal of Tea}.",
+              "type": "boolean"
+            },
+            "dropAllCaps": {
+              "description": "Drop all caps\n\nWhere values are all caps, make them title case. For example, {JOURNAL OF TEA} will become {Journal of Tea}. Roman numerals will be left unchanged.",
+              "type": "boolean"
+            },
+            "duplicates": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "abstract",
+                      "citation",
+                      "doi",
+                      "key"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "boolean"
+                }
+              ],
+              "description": "Check for duplicates\n\nWarn if duplicates are found, which are entries where DOI, abstract, or author and title are the same."
+            },
+            "enclosingBraces": {
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "boolean"
+                }
+              ],
+              "description": "Enclose values in double braces\n\nEnclose the given fields in double braces, such that case is preserved during BibTeX compilation."
+            },
+            "encodeUrls": {
+              "description": "Encode URLs\n\nReplace invalid URL characters with percent encoded values.",
+              "type": "boolean"
+            },
+            "escape": {
+              "description": "Escape special characters\n\nEscape special characters, such as umlaut. This ensures correct typesetting with latex. Enabled by default.",
+              "type": "boolean"
+            },
+            "generateKeys": {
+              "description": "Generate citation keys [Experimental]\n\nFor all entries replace the key with a new key of the form <author><year><title>. A JabRef citation pattern can be provided. This is an experimental option that may change without warning.",
+              "type": [
+                "string",
+                "boolean"
+              ]
+            },
+            "lowercase": {
+              "description": "Lowercase fields\n\nLowercase field names and entry type. Enabled by default.",
+              "type": "boolean"
+            },
+            "maxAuthors": {
+              "description": "Maximum authors\n\nTruncate authors if above a given number into \"and others\".",
+              "type": "number"
+            },
+            "merge": {
+              "description": "Merge duplicate entries\n\nMerge duplicates entries. Use the duplicates option to determine how duplicates are identified. There are different ways to merge:\n- first: only keep the original entry\n- last: only keep the last found duplicate\n- combine: keep original entry and merge in fields of duplicates if they do not already exist\n- overwrite: keep original entry and merge in fields of duplicates, overwriting existing fields if they exist",
+              "enum": [
+                "combine",
+                false,
+                "first",
+                "last",
+                "overwrite",
+                true
+              ]
+            },
+            "months": {
+              "description": "Abbreviate months\n\nConvert all months to three letter abbreviations (jan, feb, etc).",
+              "type": "boolean"
+            },
+            "numeric": {
+              "description": "Use numeric values where possible\n\nStrip quotes and braces from numeric/month values. For example, {1998} will become 1998.",
+              "type": "boolean"
+            },
+            "omit": {
+              "description": "Remove fields\n\nRemove specified fields from bibliography entries.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "removeBraces": {
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "boolean"
+                }
+              ],
+              "description": "Remove braces\n\nRemove any curly braces within the value, unless they are part of a command."
+            },
+            "removeDuplicateFields": {
+              "description": "Remove duplicate fields\n\nOnly allow one of each field in each entry. Enabled by default.",
+              "type": "boolean"
+            },
+            "removeEmptyFields": {
+              "description": "Remove empty fields\n\nRemove any fields that have empty values.",
+              "type": "boolean"
+            },
+            "sort": {
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "boolean"
+                }
+              ],
+              "description": "Sort bibliography entries\n\nSort entries by the specified field names (citation key is used if no fields are specified). For descending order, prefix the field with a dash (-).\nMultiple fields may be specified to sort everything by first field, then by the second field whenever the first field for entries are equal, etc.\nThe following additional fields are also permitted: key (entry citation key), type (sorts by the type of entry, e.g. article), and special (ensures that"
+            },
+            "sortFields": {
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "boolean"
+                }
+              ],
+              "description": "Sort fields\n\nSort the fields within entries.\nIf no fields are specified fields will be sorted by: title, shorttitle, author, year, month, day, journal, booktitle, location, on, publisher, address, series, volume, number, pages, doi, isbn, issn, url, urldate, copyright, category, note, metadata"
+            },
+            "sortProperties": {
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "boolean"
+                }
+              ],
+              "description": "Sort properties\n\nAlias of sort fields (legacy)"
+            },
+            "space": {
+              "description": "Indent with spaces\n\nIndent all fields with the specified number of spaces. Ignored if tab is set.",
+              "type": [
+                "number",
+                "boolean"
+              ]
+            },
+            "stripComments": {
+              "description": "Remove comments\n\nRemove all comments from the bibtex source.",
+              "type": "boolean"
+            },
+            "stripEnclosingBraces": {
+              "description": "Strip double-braced values\n\nWhere an entire value is enclosed in double braces, remove the extra braces. For example, {{Journal of Tea}} will become {Journal of Tea}.",
+              "type": "boolean"
+            },
+            "tab": {
+              "description": "Indent with tabs\n\nIndent all fields with a tab.",
+              "type": "boolean"
+            },
+            "tidyComments": {
+              "description": "Tidy comments\n\nRemove whitespace surrounding comments.",
+              "type": "boolean"
+            },
+            "trailingCommas": {
+              "description": "Trailing commas\n\nEnd the last key value pair in each entry with a comma.",
+              "type": "boolean"
+            },
+            "wrap": {
+              "description": "Wrap values\n\nWrap long values at the given column",
+              "type": [
+                "number",
+                "boolean"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run check-types && npm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.100.0",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
+    "@typescript-eslint/parser": "^8.31.1",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.5.2",
+    "esbuild": "^0.25.3",
+    "eslint": "^9.25.1",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "bibtex-tidy": "^1.14.0",
+    "diff": "^8.0.2"
+  },
+  "license": "MIT"
+}
