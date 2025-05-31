@@ -210,37 +210,12 @@
               ],
               "description": "Sort fields\n\nSort the fields within entries.\nIf no fields are specified fields will be sorted by: title, shorttitle, author, year, month, day, journal, booktitle, location, on, publisher, address, series, volume, number, pages, doi, isbn, issn, url, urldate, copyright, category, note, metadata"
             },
-            "sortProperties": {
-              "anyOf": [
-                {
-                  "items": {
-                    "type": "string"
-                  },
-                  "type": "array"
-                },
-                {
-                  "type": "boolean"
-                }
-              ],
-              "description": "Sort properties\n\nAlias of sort fields (legacy)"
-            },
-            "space": {
-              "description": "Indent with spaces\n\nIndent all fields with the specified number of spaces. Ignored if tab is set.",
-              "type": [
-                "number",
-                "boolean"
-              ]
-            },
             "stripComments": {
               "description": "Remove comments\n\nRemove all comments from the bibtex source.",
               "type": "boolean"
             },
             "stripEnclosingBraces": {
               "description": "Strip double-braced values\n\nWhere an entire value is enclosed in double braces, remove the extra braces. For example, {{Journal of Tea}} will become {Journal of Tea}.",
-              "type": "boolean"
-            },
-            "tab": {
-              "description": "Indent with tabs\n\nIndent all fields with a tab.",
               "type": "boolean"
             },
             "tidyComments": {

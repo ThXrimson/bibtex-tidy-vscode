@@ -22,7 +22,7 @@ export function activate(context: ExtensionContext) {
   for (const scheme of schemes) {
     context.subscriptions.push(
       languages.registerDocumentFormattingEditProvider(
-        { language: "bibtex", scheme: scheme },
+        { language: "bibtex", scheme },
         provider
       )
     );
