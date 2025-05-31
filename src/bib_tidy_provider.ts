@@ -1,4 +1,5 @@
 import {
+  workspace,
   DocumentFormattingEditProvider,
   TextDocument,
   FormattingOptions,
@@ -12,22 +13,18 @@ import { tidy, BibTeXTidyOptions } from "bibtex-tidy";
 import { diffLines } from "diff";
 
 export class BibTeXDocumentFormatterProvider implements DocumentFormattingEditProvider {
-  private options: BibTeXTidyOptions;
-
-  constructor(options: BibTeXTidyOptions) {
-    this.options = options;
-  }
-
   public provideDocumentFormattingEdits(
     document: TextDocument,
     options: FormattingOptions,
     token: CancellationToken
   ): Thenable<TextEdit[]> {
     const content = document.getText();
-    this.options.modify = false;
-    this.options.tab = !options.insertSpaces;
-    this.options.space = options.tabSize;
-    const result = tidy(content, this.options);
+    const bibtexTidyOptions =
+      workspace.getConfiguration("bibtex-tidy").get<BibTeXTidyOptions>("options") ?? {};
+    bibtexTidyOptions.modify = false;
+    bibtexTidyOptions.tab = !options.insertSpaces;
+    bibtexTidyOptions.space = options.tabSize;
+    const result = tidy(content, bibtexTidyOptions);
     return diff(content, result.bibtex);
   }
 }
